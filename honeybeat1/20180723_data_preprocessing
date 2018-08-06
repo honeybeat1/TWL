@@ -1,0 +1,66 @@
+## Today We Learned
+### 2018/07/23 ☀️ 데이터 전처리
+
+numpy - 수치계산을 위한 라이브러리, 내부가 c라 속도가 빠름
+
+pandas - 데이터 분석을 위한 라이브러리
+
+다음의 과정을 거친다
+
+- classification (분류)
+  - ex) e-mail에서 스팸인지 아닌지, 소셜/프로모션/메일 폴더 나눠주기
+- regression (회귀)
+  - ex) 수요예측, 물량, 배송기사 인력 등
+- clustering
+  - 비슷한 것 끼리 모아주는 것
+- dimensional reduction (차원 축소)
+
+자연어 처리 w/ soynlp
+
+- 토큰화 한 다음 불용화처리 하여 뺀다
+  - sentence로 돌리면 불용어 포함된 단어들의 부분이 바뀌어서
+  - 어절 단위(띄어쓰기)로 토큰화
+  - meaningful_words = [word for word in text if not word in stops]
+  - stops에 없는 경우에만 담아라
+- 전처리 어떻게 하냐에 따라 의미가 달라진다
+- 전처리를 해서 결과가 더 안 좋아지는 경우도 있다
+- cf) %time : 걸리는 시간 알아보기 (해당 줄)
+  - %%time : 그 아래 전체 (모든 줄)
+- text = re.sub ('[0-9]','',text)
+  - re = regular expression 정규 표현식 라이브러리
+    - 회원가입할 때 전화번호, 이메일 형식 아니면 바꾸라고 하는 안내문 등
+    - 모든 언어에 다 있음 문법 다 비슷하다
+    - 데이터 전처리 필수품
+  - sub = substitute 대체 함수
+  - '[0-9]' 모든 숫자를 '' 다 공백으로 바꿔라
+- 지도학습 (supervised learning)
+  - training data, training labels → model 특성에 따른 모델 생성
+  - test data를 넣어서 예측, test label을 통해 평가
+  - 모델 생성 = clf.fit(X_train, y_train) #X_train=행렬 형태, y_train=벡터
+  - y_pred = clf.predict(X_test) #예측
+  - clf.score(X_test,y_test) #평가, 측정
+- 비지도학습 (unsupervised learning)
+  - label이 없다
+  - pca = PCA()
+  - pca.fit(X_train)
+  - X_new = pca.transform(X_test)
+- Bag of words = 단어 담는 가방
+- Tfidf → 필요한 단어에 가중치 주기 (쓸데없는 단어 줄이기)
+  - → 검색엔진에서 많이 씀, Bag of words 단점 보완
+
+단어 벡터화
+
+- 텍스트 전처리 필요하다
+- 음소 표기법 → 위치에 따라 뜻이 달라지는 단어들
+  - 품사 정보 보존되어야 함, 의미에 맞게 줄일 수 있도록
+- 행렬로 만들어 random forest나 decision tree에 넣는 것
+- 하나 하나 column을 만들어 엄청 큰 행렬을 만다는 것
+- BOW → 얼마나 많이 등장하는지 (빈도수) 만
+  - 따라서 의미 보존이 필요하다
+  - n_gram으로 (n개의 토큰) 보완 : 어떻게? how?
+- word2vec → 개념 간 유사성
+  - 딥러닝 기반
+  - 영화 추천 시스템 등에 이용
+  - 나와 관심사가 비슷한 사람 추천 (sns)등
+- CBOW → 전체 text (문맥)으로 하나의 단어 예측
+- Skip-Gram → 단어 옆에 올 단어 예측
